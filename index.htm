@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+      path {
+        transform-origin: 50% 0%;
+      }
+      .background--custom {
+        background-color: #FFFFFF;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        top: 0;
+        left: 0;
+      }
+      @keyframes path0 {
+        0% {
+          transform: rotate(20deg);
+        }
+        100% {
+          transform: rotate(-20deg);
+        }
+      }
+      @keyframes path1 {
+        0% {
+          transform: rotate(50deg);
+        }
+        100% {
+          transform: rotate(-50deg);
+        }
+      }
+      @keyframes path2 {
+        0% {
+          transform: rotate(-50deg);
+        }
+        100% {
+          transform: rotate(50deg);
+        }
+      }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      .hero {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 60vh;
+        width: 70vw;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border: solid 1px rgba(0, 0, 0, 0.2);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      .titlebar {
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+          padding: 8px 8px;
+          display: flex;
+          background-color: rgba(255, 255, 255, 0.9);
+      }
+      h1 {
+          margin: 0;
+      }
+      .titlebar .btn {
+        display: inline-flex;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        font-size: 12px;
+        margin: auto 0px auto 8px;
+        align-items: center;
+        justify-content: center;
+        content-visibility: hidden;
+      }
+      .titlebar .btn:hover {
+          content-visibility: visible;
+      }
+      .titlebar .title {
+          font-weight: 800;
+          font-size: 13.5px;
+          margin: auto;
+          color: rgba(0, 0, 0, 0.6);
+      }
+      .titlebar .title img {
+          height: 13px;
+      }
+      .content {
+          height: calc(100% - 30px);
+          display: flex;
+      }
+      .leftmenu {
+          display: inline-block;
+          width: 20%;
+          background-color: rgba(255, 255, 255, 0.7);
+          border-bottom-left-radius: 10px;
+      }
+      .menulist {
+        margin: 12px 10px;
+      }
+      .menutitle {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.4);
+          font-weight: 700;
+          margin: 0px 0px 14px 10px;
+      }
+      .menulist ul {
+          margin: 0;
+          padding: 0;
+      }
+      .menulist ul li {
+          list-style: none;
+          font-size: 13px;
+          padding: 5px 0px 5px 6px;
+          font-weight: 300;
+      }
+      .menulist ul li.active {
+        background-color: rgba(128, 128, 128, 0.3);
+        border-radius: 5px;
+      }
+      .menulist ul li img {
+          height: 15px;
+          margin-right: 5px;
+      }
+      .rightcontent {
+        background-color: rgba(255, 255, 255, 0.9);
+        width: 100%;
+        padding: 15px;
+        border-bottom-right-radius: 10px;
+      }
+      .foldericon {
+        display:inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+      }
+      .activeiconcaption{
+        background-color: #0063E1;
+        color: #FFFFFF;
+      }
+      .activeiconimg{
+        background-color: rgba(128, 128, 128, 0.3);
+      }
+      .foldericon img {
+          height: 60px;
+          padding: 3px 5px;
+          border-radius: 5px;
+      }
+      .foldericon .caption {
+        font-size: 12px;
+        font-weight: 300;
+        padding: 1px 2px;
+        border-radius: 2px;
+      }
+      .alertbox {
+        position: fixed;
+        top: 25%;
+        left: 38%;
+        /* transform: translate(-50%, -50%); not working with animate css*/ 
+        max-width: 18vw;
+        background-color: rgba(200, 200, 200, 0.6);
+        padding: 15px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        -webkit-backdrop-filter: blur(7px);
+        backdrop-filter: blur(7px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border: solid 1px rgba(0, 0, 0, 0.1);
+      }
+      .alertbox img {
+          height: 70px;
+          width: 70px;
+          margin: 10px 0px 20px 0px;
+      }
+      .alertbox span {
+          text-align: center;
+          margin: 7px 0px;
+      }
+      .alertbox .headtext {
+          font-size: 14px;
+          font-weight: 600;
+      }
+      .alertbox .subtext {
+          font-size: 12px;
+          font-weight: 300;
+      }
+      .alertbox .buttons {
+          margin-top: 10px;
+          width: 95%;
+          display: flex;
+          justify-content: space-between;
+      }
+      .alertbox .buttons button {
+          height: 28px;
+          width: 110px;
+          font-size: 13px;
+          font-weight: 300;
+      }
+      .alertbox .buttons button.secondary {
+          background-color: rgba(128, 128, 128, 0.3);
+          border: none;
+          border-radius: 5px;
+          color: #000000;
+      }
+      .alertbox .buttons button.primary {
+        background: linear-gradient(180deg, rgba(7,141,252,1) 0%, rgba(6,87,181,1) 100%);
+          border: none;
+          border-radius: 5px;
+          color: #FFFFFF;
+      }
+      .alertbox .buttons button.secondary:active {
+        background-color: rgba(128, 128, 128, 0.4);
+      }
+      .alertbox .buttons button.primary:active {
+        background: linear-gradient(0deg, rgba(7,141,252,1) 0%, rgba(6,87,181,1) 100%);
+      }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".alertbox").hide();
+            $(".foldericon").click(function (e) { 
+                $(".foldericonimg").addClass("activeiconimg");
+                $(".caption").addClass("activeiconcaption");
+             });
+             $(".hero").click(function (e) { 
+                if($(e.target).closest('.foldericon').length) {
+                    return;
+                }
+                $(".foldericonimg").removeClass("activeiconimg");
+                $(".caption").removeClass("activeiconcaption");
+             });
+             $(".foldericon").dblclick(function () { 
+                 $(".hero").hide();
+                 $(".hero").css("-webkit-backdrop-filter", "none");
+                 $(".alertbox").show();
+              });
+              $("button").click(function () { 
+                 $(".hero").show();
+                 $(".alertbox").hide();
+              });
+        });
+    </script>
+  </head>
+  <body>
+    <svg class="background--custom" id="demo" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path fill="#a64d1f" fill-opacity="0.6" d="M-100 -100L200 -100L200 70L-100 70Z" style="animation: path0 6.024096385542169s linear infinite alternate;" /><path fill="#35d032" fill-opacity="0.8" d="M-100 -100L200 -100L200 40L-100 40Z" style="animation: path1 4.716981132075472s linear infinite alternate;" /><path fill="#0c5d07" fill-opacity="0.5" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path2 71.42857142857143s linear infinite alternate;" />
+      </svg>
+
+    <div class="hero animate__animated animate__zoomIn">
+        <div class="titlebar">
+            <span class="btn" style="background-color: #FF5F57;border:solid 1px #E03F36;color: #7F0808">&times;</span>
+            <span class="btn" style="background-color: #FEBC2E;border:solid 1px #DF9C24;color: #B37218">-</span>
+            <span class="btn" style="background-color: #34C840;border:solid 1px #2EA71C;color: #16620A">+</span>
+            <span class="title"><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/SystemIcons/SystemEntity/SystemEntity_Computer.png"> Hello title</span>
+        </div>
+        <div class="content">
+            <div class="leftmenu">
+                <div class="menulist">
+                    <div class="menutitle">Links</div>
+                    <ul>
+                        <li class="active"><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/system-entity/house.png"> Home</li>
+                        <li><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/control/book.png"> About</li>
+                        <li><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/permissions/person-crop-circle.png"> Contact</li>
+                    </ul>
+                </div>
+                <div class="menulist">
+                    <div class="menutitle">Other</div>
+                    <ul>
+                        <li><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/preferences/gearshape.png"> Configurations</li>
+                        <li><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/toolbar/info-circle.png"> Version info</li>
+                        <li><img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/preferences/at.png"> Email</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rightcontent">
+                <h1>Hello there!</h1>
+                <p><i>Some of these features might not work on some browsers like Safari. For example, the window buttons will always have the icons inside them on Safari where the hover feature is not working.</i></p>
+                <p>This background is taken from <a href="https://pocoloco.io">Pocoloco</a>.</p>
+                <span class="foldericon">
+                    <img class="foldericonimg" src="https://media.macosicons.com/parse/files/macOSicons/af21153d07a2e92bde7b2ad155055489_low_res_1619092574091.png">
+                    <div class="caption">Open me!!</div>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="alertbox animate__animated animate__zoomIn">
+        <img src="https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/system-images/system-entity/caution.png">
+        <span class="headtext">Hi! This is an alert box with some message below.</span>
+        <span class="subtext">This text is to give some context.</span>
+        <div class="buttons">
+            <button class="secondary">Cancel</button>
+            <button class="primary">Close this</button>
+        </div>
+    </div>
+  </body>
+</html>
